@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {getPeopleRequest} from "../requestApi";
 import {sortByField} from "../utils";
 import {IPeople} from "../types";
+import {Pagination} from "../components/Pagination";
 
 const COUNT_PEOPLES_PAGE = 10
 
@@ -27,8 +28,7 @@ export const ListPeople = () => {
     }, [page])
 
     const sortArr = useMemo(() => {
-            const result = peoples.sort((a, b) => sortByField(a, b, sort.field))
-            return sort.direction ? result.reverse() : result
+            return peoples.sort((a, b) => sortByField(a, b, sort.field, sort.direction))
         }
         , [peoples, sort])
 
@@ -46,12 +46,8 @@ export const ListPeople = () => {
     }, [countPeoples])
 
     return (
-        <Container>
-            <Pagination>
-                {pagination.map((item, i) =>
-                    <div key={i} onClick={() => setPage(item)}>{item}</div>
-                )}
-            </Pagination>
+        <>
+            <Pagination items={pagination} onClick={setPage}/>
             <Table>
                 <TableHead>
                     <Row>
@@ -76,23 +72,16 @@ export const ListPeople = () => {
                     )}
                 </TableBody>
             </Table>
-        </Container>
+        </>
     )
 }
-
-const Pagination = styled.div`
-  display: flex;
-  margin: 25px 0;
-  justify-content: center;
-  gap: 20px;
-`
-
-const Container = styled.div``
 
 const Table = styled.table`
   width: 100%;`
 
-const TableHead = styled.thead``
+const TableHead = styled.thead`
+  background: #aba9a9;
+`
 
 const TableBody = styled.tbody``
 
