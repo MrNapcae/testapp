@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from 'react'
 import styled from 'styled-components'
 import {getPeopleRequest} from "../requestApi";
 import {sortByField} from "../utils";
-import {IPeople} from "../types";
+import {IPeople, ISort} from "../types";
 import {Pagination} from "../components/Pagination";
 
 const COUNT_PEOPLES_PAGE = 10
@@ -11,7 +11,7 @@ export const TablePeople = () => {
     const [countPeoples, setCountPeoples] = useState<number>(0)
     const [page, setPage] = useState<number>(1)
     const [peoples, setPeoples] = useState<IPeople[]>([])
-    const [sort, setSort] = useState({field: 'name', direction: false})
+    const [sort, setSort] = useState<ISort>({field: 'name', direction: false})
 
     useEffect(() => {
         const getStat = async () => {
@@ -35,18 +35,22 @@ export const TablePeople = () => {
     }
 
     const pagination = useMemo(() => {
-        const countPages = countPeoples / COUNT_PEOPLES_PAGE
-        const pages = []
+        if (countPeoples !== 0) {
+            const countPages = countPeoples / COUNT_PEOPLES_PAGE
+            const pages = []
 
-        for (let i = 1; i < countPages; i++) {
-            pages.push(i)
+            for (let i = 1; i < countPages; i++) {
+                pages.push(i)
+            }
+
+            if (pages.length + 1 % countPeoples !== 0) {
+                pages.push(pages[pages.length - 1] + 1)
+            }
+
+            return pages
         }
 
-        if (pages.length + 1 % countPeoples !== 0) {
-            pages.push(pages[pages.length - 1] + 1)
-        }
-
-        return pages
+        return []
     }, [countPeoples])
 
     return (

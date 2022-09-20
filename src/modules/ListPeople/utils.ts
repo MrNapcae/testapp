@@ -1,6 +1,6 @@
-import {IPeople} from "./types";
+import {IPeople, ISort} from "./types";
 
-export const sortByField = (a: IPeople, b: IPeople, sort: { field: string, direction: boolean }) => {
+export const sortByField = (a: IPeople, b: IPeople, sort: ISort) => {
     if (a[sort.field] === 'unknown' || b[sort.field] === 'unknown') {
         return -1
     }

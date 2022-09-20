@@ -8,3 +8,9 @@ export interface IGetPeoplesResponse {
     "previous": string
     "results": IPeople[]
 }
+
+
+export interface ISort {
+    field: string
+    direction: boolean
+}
