@@ -1,0 +1,1 @@
+export { ListPeople } from './ListPeople'
