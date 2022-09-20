@@ -27,9 +27,7 @@ export const ListPeople = () => {
         getStat()
     }, [page])
 
-    const sortArr = useMemo(() => {
-            return peoples.sort((a, b) => sortByField(a, b, sort.field, sort.direction))
-        }
+    const sortArr = useMemo(() => peoples.sort((a, b) => sortByField(a, b, sort))
         , [peoples, sort])
 
     const onClickSortByField = (field: string) => {
@@ -39,9 +37,15 @@ export const ListPeople = () => {
     const pagination = useMemo(() => {
         const countPages = countPeoples / COUNT_PEOPLES_PAGE
         const pages = []
+
         for (let i = 1; i < countPages; i++) {
             pages.push(i)
         }
+
+        if (pages.length + 1 % countPeoples !== 0) {
+            pages.push(pages[pages.length - 1] + 1)
+        }
+
         return pages
     }, [countPeoples])
 
