@@ -14,9 +14,13 @@ export const ListPeople = () => {
 
     useEffect(() => {
         const getStat = async () => {
-            const response = await getPeopleRequest(page)
-            setCountPeoples(response.data.count)
-            setPeoples(response.data.results)
+            try {
+                const response = await getPeopleRequest(page)
+                setCountPeoples(response.data.count)
+                setPeoples(response.data.results)
+            } catch (e) {
+                console.log(e)
+            }
         }
 
         getStat()
