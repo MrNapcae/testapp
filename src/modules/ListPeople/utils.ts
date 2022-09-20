@@ -1,21 +1,22 @@
 import {IPeople, ISort} from "./types";
 
+const reDate = new RegExp('(\\d{4})-(\\d{2})-(\\d{2})');
+
 export const sortByField = (a: IPeople, b: IPeople, sort: ISort) => {
-    if (a[sort.field] === 'unknown' || b[sort.field] === 'unknown') {
-        return -1
-    }
+    const parsedA = parseInt(a[sort.field], 10)
+    const isNumber = !isNaN(parsedA)
+    const isDate = reDate.test(a[sort.field])
 
-    const dateA = Date.parse(a[sort.field])
-    const numberFieldA = parseInt(a[sort.field], 10)
-    const isDate = isNaN(dateA)
-
-    if (isNaN(numberFieldA) && isDate) {
+    if (!isNumber && !isDate) {
         return sortByStrings(a[sort.field], b[sort.field], sort.direction)
     } else {
-        if (!isDate) {
-            return sort.direction ? dateA - Date.parse(b[sort.field]) : Date.parse(b[sort.field]) - dateA
+        if (isDate) {
+            const parsedDateA = Date.parse(a[sort.field])
+            const parsedDateB = Date.parse(b[sort.field])
+            return sort.direction ? parsedDateA - parsedDateB : parsedDateB - parsedDateA
         } else {
-            return sort.direction ? numberFieldA - parseInt(b[sort.field], 10) : parseInt(b[sort.field], 10) - numberFieldA
+            const parsedB = parseInt(b[sort.field], 10)
+            return sort.direction ? parsedA - parsedB :parsedB - parsedA
         }
     }
 }
