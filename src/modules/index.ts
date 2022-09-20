@@ -1,1 +1,1 @@
-export { ListPeople } from './ListPeople'
+export { TablePeople } from './ListPeople'

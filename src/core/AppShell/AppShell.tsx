@@ -1,8 +1,8 @@
 import React from 'react'
-import {ListPeople} from "../../modules";
+import {TablePeople} from "../../modules";
 
 export const AppShell = () => {
     return (
-        <ListPeople />
+        <TablePeople />
     )
 }

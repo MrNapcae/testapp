@@ -7,7 +7,7 @@ import {Pagination} from "../components/Pagination";
 
 const COUNT_PEOPLES_PAGE = 10
 
-export const ListPeople = () => {
+export const TablePeople = () => {
     const [countPeoples, setCountPeoples] = useState<number>(0)
     const [page, setPage] = useState<number>(1)
     const [peoples, setPeoples] = useState<IPeople[]>([])
